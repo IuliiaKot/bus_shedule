@@ -1,0 +1,20 @@
+<p>
+  Stop near you:
+</p>
+<ul>
+  <% @nearloc.each do |loc|%>
+  <li><%= loc["title"]%></li>
+  <% end %>
+</ul>
+
+<p>
+  Time
+</p>
+<ul>
+  <% @res.each do |k,v|%>
+  <li><%= k %>: </li>
+    <% v.each do |elm| %>
+      <%= elm%> - 
+    <% end %>
+  <% end %>
+</ul>

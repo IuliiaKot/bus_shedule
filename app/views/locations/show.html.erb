@@ -1,0 +1,15 @@
+<%  "Location" %>
+<% @location.each do |l|%>
+<p>
+  <strong>Address:</strong>
+  <%= l.address %>
+</p>
+<p>
+  <strong>Latitude:</strong>
+  <%= l.latitude %>
+</p>
+<p>
+  <strong>Longitude:</strong>
+  <%= l.longitude %>
+</p>
+<% end %>

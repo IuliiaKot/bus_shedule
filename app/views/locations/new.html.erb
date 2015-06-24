@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>New Location</h2>
+  <%= form_for @location do |f| %>
+  <p>
+    <%= f.label :address %> <br/>
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+  <% end %>
+</div>

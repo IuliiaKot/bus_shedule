@@ -1,0 +1,12 @@
+<p>
+  All stops
+</p>
+
+<form action="/locations" method="post">
+  <select class="stop_title" name="stop[title]">
+    <%= @stops.each do |stop| %>
+      <option name="stop.title" value="<% stop.title %>"><%= stop.title %></option>
+    <% end %>
+    <input type="submit" value="Show">
+  </select>
+</form>

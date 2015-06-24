@@ -1,0 +1,15 @@
+
+
+<div class="container">
+  <h2>locations</h2>
+  <p>
+    <p><%= link_to "New locations", new_location_path %></p>
+  </p>
+</div>
+
+<div class="list">
+  <h3>List of locations </h3>
+  <% @locations.each do |l| %>
+  <%= l.address %><br/>
+    <% end %>
+</div>
