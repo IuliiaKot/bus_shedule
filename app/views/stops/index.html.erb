@@ -1,7 +1,5 @@
-<p>
-  hello
-</p>
-a<div class="headen">
+<h2>SF-MUNI</h2>
+<div class="headen">
     <%= hidden_field_tag(:latitude, params[:latitude])%>
     <%= hidden_field_tag(:longitude, params[:longitude])%>
 </div>
@@ -35,3 +33,15 @@ a<div class="headen">
      $('#hidden2').val(position.coords.longitude);
  }
 </script>
+
+
+<p>All stops</p>
+<!-- list of all stops -->
+<form action="/stops" method="post">
+<select class="stop_title" name="stop">
+  <% @stops.each do |stop| %>
+  <option name="stop.latitude" value="<%=stop.title%>, <%= stop.latitude%>, <%= stop.longitude %>"><%= stop.title %></option>
+  <% end %>
+</select>
+<input type="submit" value="Show">
+</form>

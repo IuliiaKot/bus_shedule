@@ -7,17 +7,15 @@ class StopsController < ApplicationController
 
      @routes = Route.get_route_for_agency(tag)
      @routes = Route.all
-    # if Stop.count == 0
-    #   jhjhkj
-    #   @routes.each do |i|
-    #     tag = Route.find(i)
-    #     Stop.get_stops(tag)
-    #   end
-    # end
-    # #@stops = Stop.all
-    # #@agency = Agency.all
-    # @stops = Stop.all
-    # a = params
+     if Stop.count == 0
+       jhjhkj
+       @routes.each do |i|
+         tag = Route.find(i)
+         Stop.get_stops(tag)
+       end
+     end
+     @stops = Stop.all
+     a = params
 
   end
 
