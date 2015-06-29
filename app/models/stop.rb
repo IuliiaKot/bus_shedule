@@ -11,10 +11,17 @@ class Stop < ActiveRecord::Base
     result = []
     response = HTTParty.get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=#{route[0].agency.tag}&r=#{route[0].tag}&s=#{route[1]}")
 
-    response.parsed_response["body"]["predictions"]["direction"]["prediction"].each do |info|
-      result << info["minutes"]
+    if response.parsed_response["body"]["predictions"]["direction"]
+       response.parsed_response["body"]["predictions"]["direction"]["prediction"].each do |info|
+
+
+         result << info["minutes"]
+       end
+    else
+      return []
     end
-    return result
+
+    return result << response.parsed_response["body"]["predictions"]["direction"]["title"]
   end
 
   def self.get_stops(route)

@@ -1,3 +1,30 @@
 // Place all the styles related to the stops controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.time-list {
+  display: inline;
+    padding-top: 5em;
+}
+
+.time-list li{
+  display: inline;
+}
+
+.name-direction div{
+  background-color: #0099ff;
+  height: 35px;
+  font-size: 20px;
+  border-radius: 5px;
+  padding-top: 0.2em;
+  padding-left: 0.3em;
+  margin-bottom: 0.4em;
+}
+
+.name-direction  {
+  background-color: #009999;
+  height: 100%;
+  width: 45%;
+  margin-top: 10px;
+  font-size: 16px;
+}
