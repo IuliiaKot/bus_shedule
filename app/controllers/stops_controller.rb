@@ -1,12 +1,12 @@
 class StopsController < ApplicationController
   def index
 
-    # Agency.get_agency
-    # @agency = Agency.all
-    # tag = Agency.find_by_tag("sf-muni")
-    #
-    # @routes = Route.get_route_for_agency(tag)
-    # @routes = Route.all
+     Agency.get_agency
+     @agency = Agency.all
+     tag = Agency.find_by_tag("sf-muni")
+
+     @routes = Route.get_route_for_agency(tag)
+     @routes = Route.all
     # if Stop.count == 0
     #   jhjhkj
     #   @routes.each do |i|
