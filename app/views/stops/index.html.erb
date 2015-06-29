@@ -1,3 +1,37 @@
 <p>
   hello
 </p>
+a<div class="headen">
+    <%= hidden_field_tag(:latitude, params[:latitude])%>
+    <%= hidden_field_tag(:longitude, params[:longitude])%>
+</div>
+
+
+<p>Click the button to get your coordinates.</p>
+<button>Find me</button>
+<p id="demo"></p>
+<input type="hidden" value="" id="hidden1">
+<input type="hidden" value="" id="hidden2">
+
+<script>
+
+ var x = document.getElementById("demo");
+
+
+     if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(showPosition);
+     } else {
+         x.innerHTML = "Geolocation is not supported by this browser.";
+     }
+
+
+ function showPosition(position) {
+     x.innerHTML = "Latitude: " + position.coords.latitude +
+     "<br>Longitude: " + position.coords.longitude;
+
+     $("form input[name='latitude']").val(position.coords.latitude);
+     $("form input[name='longitude']").val(position.coords.longitude);
+     $('#hidden1').val(position.coords.latitude);
+     $('#hidden2').val(position.coords.longitude);
+ }
+</script>
