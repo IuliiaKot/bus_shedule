@@ -8,7 +8,6 @@ class StopsController < ApplicationController
      @routes = Route.get_route_for_agency(tag)
      @routes = Route.all
      if Stop.count == 0
-       jhjhkj
        @routes.each do |i|
          tag = Route.find(i)
          Stop.get_stops(tag)
