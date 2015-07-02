@@ -16,35 +16,10 @@ $(document).ready(function(){
   $(".chosen").data("placeholder","Select Frameworks...").chosen();
 });
 
- // var x = document.getElementById("demo");
- //
- //
- //     if (navigator.geolocation) {
- //         navigator.geolocation.getCurrentPosition(showPosition);
- //     } else {
- //         x.innerHTML = "Geolocation is not supported by this browser.";
- //     }
- //
- //
- // function showPosition(position) {
- //     x.innerHTML = "Latitude: " + position.coords.latitude +
- //     "<br>Longitude: " + position.coords.longitude;
- //     $("form input[name='latitude']").val(position.coords.latitude);
- //     $("form input[name='longitude']").val(position.coords.longitude);
- //     $('#hidden1').val(position.coords.latitude);
- //     $('#hidden2').val(position.coords.longitude);
- //
- //     $('#station').val(stop.title);
- //     $('#station').trigger("chosen:updated");
- //
- //      $('#station').chosen({});
- //
- //
- //  }
-
+</script>
 
 <p><%= @message %></p>
-<div class="stations"
+<div class="stations">
   <p>All stops</p>
   <!-- list of all stops -->
   <form action="/stops" method="post">
