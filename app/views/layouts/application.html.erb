@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  </script>
+
 </head>
 <body>
 
@@ -13,6 +13,19 @@
 
 
 
+<%- unless @lat_lng %>
+<script>
+  getGeoLocation();
+  function getGeoLocation() {
+  navigator.geolocation.getCurrentPosition(setGeoCookie);
+}
+
+function setGeoCookie(position) {
+  var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+  document.cookie = "lat_lng=" + escape(cookie_val);
+}
+</script>
+<%- end %>
 
 </body>
 </html>
