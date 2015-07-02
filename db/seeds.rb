@@ -5,3 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+  Agency.destroy_all
+  Route.destroy_all
+  Stop.destroy_all
+
+   Agency.get_agency
+   Route.get_route_for_agency(Agency.find_by_tag("sf-muni"))
+   Route.all.each do |r|
+     Stop.get_stops(r)
+  end

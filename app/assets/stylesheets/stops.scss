@@ -1,30 +1,84 @@
 // Place all the styles related to the stops controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+body {
+   background-color: #dadada;
+  //background-image: url('stops.jpg');
+}
 .time-list {
   display: inline;
     padding-top: 5em;
 }
 
-.time-list li{
+.time-list li {
+  padding-right: 1.5em;
   display: inline;
 }
 
+.time-list .time{
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.time-list .time-first{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.time-list span {
+    font-size: 16px;
+    padding-left: 0.5em;
+}
+
 .name-direction div{
-  background-color: #0099ff;
+  background-color: #0087d7;
   height: 35px;
   font-size: 20px;
   border-radius: 5px;
   padding-top: 0.2em;
   padding-left: 0.3em;
   margin-bottom: 0.4em;
+  text-transform: uppercase;
 }
 
 .name-direction  {
-  background-color: #009999;
+  background-color: #00afff;
   height: 100%;
-  width: 45%;
+  //width: 45%;
   margin-top: 10px;
   font-size: 16px;
+  border-radius: 20px;
+}
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+select:focus {
+  border: 1px solid #489dff;
+  outline: 0; }
+
+
+
+
+.sf-muni {
+  border-radius: 20px;
+  font-size: 26px;
+  background-color: #008787;
+  height: 60px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 1em;
+}
+
+.stops {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }

@@ -12,6 +12,9 @@
 <input type="hidden" value="" id="hidden2">
 
 <script>
+$(document).ready(function(){
+  $(".chosen").data("placeholder","Select Frameworks...").chosen();
+});
 
  var x = document.getElementById("demo");
 
@@ -26,19 +29,26 @@
  function showPosition(position) {
      x.innerHTML = "Latitude: " + position.coords.latitude +
      "<br>Longitude: " + position.coords.longitude;
-
      $("form input[name='latitude']").val(position.coords.latitude);
      $("form input[name='longitude']").val(position.coords.longitude);
      $('#hidden1').val(position.coords.latitude);
      $('#hidden2').val(position.coords.longitude);
- }
+
+     $('#station').val(stop.title);
+     $('#station').trigger("chosen:updated");
+
+      $('#station').chosen({});
+
+
+	 }
+
 </script>
 
 
 <p>All stops</p>
 <!-- list of all stops -->
 <form action="/stops" method="post">
-<select class="stop_title" name="stop">
+<select class="stop_title chosen" name="stop" id="station">
   <% @stops.each do |stop| %>
   <option name="stop.latitude" value="<%=stop.title%>, <%= stop.latitude%>, <%= stop.longitude %>"><%= stop.title %></option>
   <% end %>
