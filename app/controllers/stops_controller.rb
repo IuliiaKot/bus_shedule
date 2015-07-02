@@ -17,8 +17,8 @@ class StopsController < ApplicationController
      @stops = Stop.all
 
      a = params
-     #@lat_lng = cookies[:lat_lng].split("|")
-     @lat_lng = ["37.7606","-122.5041"]
+     @lat_lng = cookies[:lat_lng].split("|")
+     #@lat_lng = ["37.7606","-122.5041"]
      if @lat_lng.empty?
        @message = "Sorry, we can not find your location. Chose one from list"
      else
