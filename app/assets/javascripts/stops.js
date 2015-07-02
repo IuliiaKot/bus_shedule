@@ -1,3 +1,4 @@
+$(document).ready(function() {
 var x = document.getElementById("demo");
 
 
@@ -14,4 +15,5 @@ function showPosition(position) {
 
     $("form input[name='latitude']").val(position.coords.latitude);
     $("form input[name='longitude']").val(position.coords.longitude);
-}
+};
+});

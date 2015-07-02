@@ -10,6 +10,23 @@
 <body>
 
 <%= yield %>
-<h3>Hello Julia</h3>
+
+
+</script>
+</script>
+<%- unless @lat_lng %>
+<script>
+  getGeoLocation();
+  function getGeoLocation() {
+  navigator.geolocation.getCurrentPosition(setGeoCookie);
+}
+
+function setGeoCookie(position) {
+  var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+  document.cookie = "lat_lng=" + escape(cookie_val);
+}
+</script>
+<%- end %>
+
 </body>
 </html>

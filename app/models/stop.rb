@@ -6,6 +6,7 @@ class Stop < ActiveRecord::Base
   geocoded_by :title
 
   after_validation :geocode
+  #after_validation { self.geocode unless self.lat && self.lng }
 
   def self.get_time_for_stop(route)
     result = []
