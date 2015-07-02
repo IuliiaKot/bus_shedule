@@ -31,7 +31,7 @@ body {
 }
 
 .name-direction div{
-  background-color: #0087d7;
+  background-color: #00afd7; //#0087d7;
   height: 45px;
   font-size: 20px;
   border-radius: 5px;
@@ -42,7 +42,7 @@ body {
 }
 
 .name-direction  {
-  background-color: #00afff;
+  background-color: #00d7ff; //#00afff;
   height: 100%;
   //width: 45%;
   margin-top: 10px;
@@ -68,7 +68,7 @@ select:focus {
 .sf-muni {
   border-radius: 20px;
   font-size: 26px;
-  background-color: #008787;
+  background-color: #0087af;//#00afff;
   height: 60px;
   width: 50%;
   margin-left: auto;
@@ -100,4 +100,9 @@ select:focus {
 
 .message{
   text-align: center;
+}
+.not-avaliable {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }

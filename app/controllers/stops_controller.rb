@@ -18,22 +18,26 @@ class StopsController < ApplicationController
 
      a = params
      @lat_lng = cookies[:lat_lng].split("|")
-     #@lat_lng = ["37.7606","-122.5041"]
-     if @lat_lng.empty?
-       @message = "Sorry, we can not find your location. Chose one from list"
+    #  @lat_lng = ["37.7606","-122.5041"]
+     check_lat_lng(@lat_lng)
+  end
+
+  def check_lat_lng(lat_lng)
+    if lat_lng.empty?
+      @message = "Sorry, we can not find your location. Select one from the list"
+    else
+      @res ={}
+      @nearloc = @stops.near([lat_lng[0].to_f, lat_lng[1].to_f], 0.1)
+      @nearloc.each do |loc|
+        tag = Route.find_by_id(loc["route_id"])
+        @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+      end
+     end
+     if @res.empty?
+       @message = "We can not find any stops near you. Select one from the list"
      else
-       @res ={}
-       @nearloc = @stops.near([@lat_lng[0].to_f, @lat_lng[1].to_f], 0.1)
-       @nearloc.each do |loc|
-         tag = Route.find_by_id(loc["route_id"])
-         @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
-       end
-      end
-      if @res.empty?
-        @message = "We can not find any stops near you. Chose on from list"
-      else
-        @message = ""
-      end
+       @message = ""
+     end
   end
 
   def new
@@ -41,17 +45,21 @@ class StopsController < ApplicationController
 
   def create
     @message
-  #  @lat_lng = cookies[:lat_lng].split("|")
-    title = params["stop"].split(",")[0]
-    lat = params["stop"].split(",")[1].to_f
-    lng = params["stop"].split(",")[2].to_f
+    @lat_lng = cookies[:lat_lng].split("|")
     @stops = Stop.all
-    #stop = Stop.find_by_tag(params)
-    @res ={}
-    @nearloc = @stops.near([lat, lng], 0.1)
-    @nearloc.each do |loc|
-      tag = Route.find_by_id(loc["route_id"])
-      @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+    check_lat_lng(@lat_lng)
+    if @lat_lng.empty? || @res.empty?
+      title = params["stop"].split(",")[0]
+      lat = params["stop"].split(",")[1].to_f
+      lng = params["stop"].split(",")[2].to_f
+      @stops = Stop.all
+      #stop = Stop.find_by_tag(params)
+      @res ={}
+      @nearloc = @stops.near([lat, lng], 0.1)
+      @nearloc.each do |loc|
+        tag = Route.find_by_id(loc["route_id"])
+        @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+      end
     end
    end
 end
