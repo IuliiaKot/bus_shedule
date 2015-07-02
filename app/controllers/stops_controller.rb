@@ -40,6 +40,7 @@ class StopsController < ApplicationController
   end
 
   def create
+    @message
   #  @lat_lng = cookies[:lat_lng].split("|")
     title = params["stop"].split(",")[0]
     lat = params["stop"].split(",")[1].to_f
