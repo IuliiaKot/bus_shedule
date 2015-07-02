@@ -42,20 +42,7 @@ $(document).ready(function(){
  //
  //  }
 
-</script>
-# <%- unless @lat_lng %>
-# <script>
-#   getGeoLocation();
-#   function getGeoLocation() {
-#   navigator.geolocation.getCurrentPosition(setGeoCookie);
-# }
-#
-# function setGeoCookie(position) {
-#   var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
-#   document.cookie = "lat_lng=" + escape(cookie_val);
-# }
-# </script>
-# <%- end %>
+
 <p><%= @message %></p>
 <div class="stations"
   <p>All stops</p>
