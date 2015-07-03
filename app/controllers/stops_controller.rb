@@ -17,12 +17,12 @@ class StopsController < ApplicationController
      @stops = Stop.all
 
      a = params
-     @lat_lng = cookies[:lat_lng].split("|")
+     #@lat_lng = cookies[:lat_lng].split("|")
     #  @lat_lng = ["37.7606","-122.5041"]
-     check_lat_lng(@lat_lng)
+    # check_lat_lng(@lat_lng)
   end
 
-  def check_lat_lng(lat_lng)
+  def check_lat_lng(lat_lng, address)
     if lat_lng.empty?
       @message = "Sorry, we can not find your location. Select one from the list"
     else
@@ -31,6 +31,7 @@ class StopsController < ApplicationController
       @nearloc.each do |loc|
         tag = Route.find_by_id(loc["route_id"])
         @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+        @message = "Stops near " + address
       end
      end
      if @res.empty?
@@ -45,9 +46,10 @@ class StopsController < ApplicationController
 
   def create
     @message
-    @lat_lng = cookies[:lat_lng].split("|")
+    address = Geocoder.address([params[:latitude], params[:longitude].to_f])
     @stops = Stop.all
-    check_lat_lng(@lat_lng)
+    @lat_lng = [params[:latitude], params[:longitude].to_f]
+    check_lat_lng(@lat_lng, address)
     if @lat_lng.empty? || @res.empty?
       title = params["stop"].split(",")[0]
       lat = params["stop"].split(",")[1].to_f
