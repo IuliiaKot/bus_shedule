@@ -23,3 +23,5 @@ function showPosition(position) {
     $("form input[name='longitude']").val(position.coords.longitude);
 
 };
+
+});
