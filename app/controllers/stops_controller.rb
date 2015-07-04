@@ -24,7 +24,7 @@ class StopsController < ApplicationController
 
   def check_lat_lng(lat_lng, address)
     if lat_lng.empty?
-      @message = "Sorry, we can not find your location. Select one from the list"
+      @message = "Sorry, we can not find your location. Select location from the list"
     else
       @res ={}
       @nearloc = @stops.near([lat_lng[0].to_f, lat_lng[1].to_f], 0.1)
@@ -35,7 +35,7 @@ class StopsController < ApplicationController
       end
      end
      if @res.empty?
-       @message = "We can not find any stops near you. Select one from the list"
+       @message = "We can not find any stops near you. Select location from the list"
      else
        @message = ""
      end
@@ -48,6 +48,7 @@ class StopsController < ApplicationController
     @message
     @location = []
     tmps = []
+    flag = false
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
     @stops = Stop.all
     @lat_lng = [params[:latitude], params[:longitude].to_f]
@@ -64,7 +65,21 @@ class StopsController < ApplicationController
         tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
         next if tmp.length == 0
         @res << {:route => tag["title"], :title => loc["title"], :time => tmp}
-        @location << [loc["title"], loc[:latitude], loc[:longitude]]
+        if @location.length > 0
+          @location.each do |arr|
+            if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude]))
+              arr[0] += "|" + [[tag["title"],loc["title"], tmp.last]].join("|")
+              flag = true
+            end
+          end
+          if flag
+            break
+          else
+            @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
+          end
+        else
+          @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
+        end
       end
      end
    end

@@ -1,6 +1,6 @@
 <script>
 $(document).ready(function(){
-  $(".chosen").data("placeholder","Select Frameworks...").chosen();
+  $(".chosen").data("placeholder","Select location...").chosen();
 });
 
 </script>
@@ -33,7 +33,9 @@ $(document).ready(function(){
   <% @res.each do |stop| %>
   <% next  if stop[:time].length == 0%>
       <div class="name-direction">
-      <div> <%= stop[:route]%>-<%= stop[:time].last%>( <%= stop[:title]%>):</div>
+      <div> <span class="route"><%= stop[:route]%></span>, <%= stop[:time].last%> (<%= stop[:title]%>).
+      <br>
+      <span>The next bus through:</span></div>
       <ul class="time-list">
       <% (stop[:time].length - 1).times do |elm| %>
         <% if stop[:time].index(stop[:time][elm]) == 0 %>
@@ -58,7 +60,6 @@ function initialize() {
   var location = '<%= j @location.to_s.html_safe %>';
   location = location.replace(/]/g,"").replace(/[[]/g,"").split(",");
   var  latlng = new google.maps.LatLng(location[1],location[2]);
-
   var mapOptions = {
     zoom: 15,
     center: latlng
@@ -74,14 +75,21 @@ function setMarkers(map, location) {
   for (var i = 1; i < location.length; i= i + 3 ){
     var stop_lat = location[i];
     var stop_lng = location[i+1];
-    var content = location[i-1];
+
     var latlng = new google.maps.LatLng(parseFloat(stop_lat), parseFloat(stop_lng));
     var marker = new google.maps.Marker({
       position: latlng,
       map: map,
       title: "Hello"
     });
-    var content = "<p>Station:"+location[i-1]+"</p>"
+    discribe_stop = location[i-1].split("|");
+    var content = "<div class='street'>" + discribe_stop[1].replace(/"/g, "") + "</div>"+
+    "<hr>"
+    for (var j = 0; j < discribe_stop.length; j = j + 3)
+    {
+      content += "<div>"+discribe_stop[j].replace(/"/g,"") +" ("+discribe_stop[j + 2].replace(/"/g,"")+")"+"</div>";
+    }
+
     var infowindow = new google.maps.InfoWindow()
     google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow){
       return function() {

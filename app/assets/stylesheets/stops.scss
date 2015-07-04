@@ -38,7 +38,11 @@ body {
   padding-top: 0.2em;
   padding-left: 0.3em;
   margin-bottom: 0.4em;
+}
+
+.route {
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .name-direction  {
@@ -115,4 +119,9 @@ select:focus {
   margin-left: auto;
   width: 70%;
   margin-top: 2em;
+}
+
+
+.street {
+  font-weight: bold;
 }
