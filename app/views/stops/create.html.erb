@@ -19,7 +19,7 @@ $(document).ready(function(){
       <% @stops.each do |stop| %>
         <option name="stop.latitude" value="<%=stop.title%>, <%= stop.latitude%>, <%= stop.longitude %>"><%= stop.title %></option>
       <% end %>
-      <% if !@res.nil? %>
+      <% if !@res.empty? %>
       <option name="stop.latitude" value="<%= @res.first[0] %>" selected="selected"><%= @res.first[0] %></option>
       <% end %>
     </select>
@@ -31,24 +31,25 @@ $(document).ready(function(){
 
 <div class="stops">
 
-  <% @res.select {|k,v| v.length != 0}.each do |k,v| %>
-    <% next if v.last.nil?%>
+
+
+
+  <% @res.each do |stop| %>
+  <% next  if stop[:time].length == 0%>
       <div class="name-direction">
-      <div> <%= v.last%>( <%= k%>):</div>
+      <div> <%= stop[:route]%>-<%= stop[:time].last%>( <%= stop[:title]%>):</div>
       <ul class="time-list">
-      <% (v.length - 1).times do |elm| %>
-        <% if v.index(v[elm]) == 0 %>
-          <li class="time-first"><%= v[elm] %><span>min</span></li>
+      <% (stop[:time].length - 1).times do |elm| %>
+        <% if stop[:time].index(stop[:time][elm]) == 0 %>
+          <li class="time-first"><%= stop[:time][elm] %><span>min</span></li>
         <% else %>
-          <li class="time"><%= v[elm] %><span>min</span></li>
+          <li class="time"><%= stop[:time][elm] %><span>min</span></li>
         <% end %>
       <% end %>
       </ul>
       </div>
   <% end %>
-  <% if @res.values.count == 1 && @res.values.first.empty? %>
-  <div class="not-avaliable"> All routes for this stop are not avaliable right now.</div>
-  <%  end %>
+
 </div>
 
 
