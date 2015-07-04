@@ -46,6 +46,7 @@ class StopsController < ApplicationController
 
   def create
     @message
+    @location = []
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
     @stops = Stop.all
     @lat_lng = [params[:latitude], params[:longitude].to_f]
@@ -55,13 +56,17 @@ class StopsController < ApplicationController
       lat = params["stop"].split(",")[1].to_f
       lng = params["stop"].split(",")[2].to_f
       @stops = Stop.all
-      #stop = Stop.find_by_tag(params)
       @res ={}
       @nearloc = @stops.near([lat, lng], 0.1)
       @nearloc.each do |loc|
         tag = Route.find_by_id(loc["route_id"])
-        @res[loc["title"]] = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+        tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
+        @res[loc["title"]] = tmp
+        if tmp.length != 0
+          @location << [loc["title"], loc[:latitude], loc[:longitude]]
+        end
       end
+
     end
    end
 end

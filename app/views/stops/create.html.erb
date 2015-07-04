@@ -6,6 +6,7 @@ $(document).ready(function(){
 </script>
 
 <body>
+
   <header class="sf-muni">
     SF-MUNI
   </header>
@@ -17,6 +18,9 @@ $(document).ready(function(){
     <select class="stop_title chosen" name="stop" id="station">
       <% @stops.each do |stop| %>
         <option name="stop.latitude" value="<%=stop.title%>, <%= stop.latitude%>, <%= stop.longitude %>"><%= stop.title %></option>
+      <% end %>
+      <% if !@res.nil? %>
+      <option name="stop.latitude" value="<%= @res.first[0] %>" selected="selected"><%= @res.first[0] %></option>
       <% end %>
     </select>
     <input type="submit" value="Show">
@@ -47,4 +51,40 @@ $(document).ready(function(){
   <%  end %>
 </div>
 
+
+<div class="map">
+  <div id="map-canvas" style='width: 1000px; height: 600px;'></div>
+</div>
 </body>
+<script type="text/javascript">
+function initialize() {
+  var location = '<%= j @location.to_s.html_safe %>';
+  location = location.replace(/]/g,"").replace(/[[]/g,"").split(",");
+  var  latlng = new google.maps.LatLng(location[1],location[2]);
+
+  var mapOptions = {
+    zoom: 15,
+    center: latlng
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+  for (var i = 1; i < location.length; i= i + 3 ){
+    var stop_lat = location[i];
+    var stop_lng = location[i+1];
+    var content = location[i-1];
+    var latlng = new google.maps.LatLng(parseFloat(stop_lat), parseFloat(stop_lng));
+    var marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      title: "Hello"
+    });
+
+  };
+};
+
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>

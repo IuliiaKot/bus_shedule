@@ -73,6 +73,7 @@ GEM
     geocoder (1.2.9)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    gmaps4rails (2.1.2)
     guard (2.12.7)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
@@ -240,6 +241,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   faker
   geocoder
+  gmaps4rails
   guard-rspec
   httparty
   jbuilder (~> 2.0)
