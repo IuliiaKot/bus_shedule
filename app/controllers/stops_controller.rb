@@ -14,8 +14,7 @@ class StopsController < ApplicationController
      end
      @agency = Agency.all
      @routes = Route.all
-     @stops = Stop.all
-
+     @stops = Stop.select("id, title, route_id, latitude, longitude").group("title")
      a = params
      #@lat_lng = cookies[:lat_lng].split("|")
     #  @lat_lng = ["37.7606","-122.5041"]
@@ -50,16 +49,17 @@ class StopsController < ApplicationController
     tmps = []
     flag = false
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
-    @stops = Stop.all
+    @stops  = Stop.select("id, title, route_id, latitude, longitude").group("title")
+
     @lat_lng = [params[:latitude], params[:longitude].to_f]
     check_lat_lng(@lat_lng, address)
     if @lat_lng.empty? || @res.empty?
       title = params["stop"].split(",")[0]
       lat = params["stop"].split(",")[1].to_f
       lng = params["stop"].split(",")[2].to_f
-      @stops = Stop.all
+      @stops_all = Stop.all
       @res = []
-      @nearloc = @stops.near([lat, lng], 0.1)
+      @nearloc = @stops_all.near([lat, lng], 0.1)
       @nearloc.each do |loc|
         tag = Route.find_by_id(loc["route_id"])
         tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
