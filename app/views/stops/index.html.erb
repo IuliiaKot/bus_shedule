@@ -56,12 +56,13 @@ $(document).ready(function(){
 <div class="all">
   <!-- list of all stops -->
   <div>
-  <form action="/stops" method="post">
+    <form action="/stops" method="post">
     <%= hidden_field_tag(:latitude, params[:latitude])%>
     <%= hidden_field_tag(:longitude, params[:longitude])%>
     <select class="stop_title chosen" name="stop" id="station">
       <% @stops.select("distinct title").order("title").each do |stop| %>
-        <option name="stop.latitude" value="<%=stop.title%>"><%= stop.title %></option>
+        <option name="stop.latitude" value="<%=stop.title%>,<%= @stops.select('latitude, longitude').where('title =?',stop.title)[0][:latitude] %>,<%= @stops.select('longitude').where('title =?',stop.title)[0][:longitude] %>"><%= stop.title %></option>
+
       <% end %>
     </select>
     <input type="submit" value="Show">
