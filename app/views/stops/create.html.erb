@@ -17,8 +17,8 @@ $(document).ready(function(){
   <div>
   <form action="/stops" method="post">
     <select class="stop_title chosen" name="stop" id="station">
-      <% @stops.each do |stop| %>
-        <option name="stop.latitude" value="<%=stop.title%>, <%= stop.latitude%>, <%= stop.longitude %>"><%= stop.title %></option>
+      <% @stops.select("distinct title").order("title").each do |stop| %>
+        <option name="stop.latitude" value="<%=stop.title%>"><%= stop.title %></option>
       <% end %>
       <% if !@res.empty? %>
       <option name="stop.latitude" value="<%= @res.first[:title] %>" selected="selected"><%= @res.first[:title] %></option>
