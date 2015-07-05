@@ -14,7 +14,7 @@ class StopsController < ApplicationController
      end
      @agency = Agency.all
      @routes = Route.all
-     @stops = Stop.select("*").group("title")
+     @stops = Stop.select("title, route_id, latitude, longitude").group("title")
      a = params
      #@lat_lng = cookies[:lat_lng].split("|")
     #  @lat_lng = ["37.7606","-122.5041"]
@@ -49,7 +49,7 @@ class StopsController < ApplicationController
     tmps = []
     flag = false
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
-    @stops  = Stop.select("*").group("title")
+    @stops  = Stop.select("title, route_id, latitude, longitude").group("title")
 
     @lat_lng = [params[:latitude], params[:longitude].to_f]
     check_lat_lng(@lat_lng, address)
