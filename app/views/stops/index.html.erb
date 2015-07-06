@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <body>
   <script>
   $(document).ready(function() {
@@ -28,12 +28,11 @@
   };
 
   });
-
-
-  </script>
+</script>
   <header class="sf-muni">
     SF-MUNI
   </header>
+<div>
 <div class="headen">
     <%= hidden_field_tag(:latitude, params[:latitude])%>
     <%= hidden_field_tag(:longitude, params[:longitude])%>
@@ -56,19 +55,22 @@ $(document).ready(function(){
 <div class="all">
   <!-- list of all stops -->
   <div>
-    <form action="/stops" method="post">
+    <form action="/stops" method="post" class="form-inline">
     <%= hidden_field_tag(:latitude, params[:latitude])%>
     <%= hidden_field_tag(:longitude, params[:longitude])%>
-    <select class="stop_title chosen" name="stop" id="station">
-      <% @stops.select("distinct title").order("title").each do |stop| %>
-        <option name="stop.latitude" value="<%=stop.title%>,<%= @stops.select('latitude, longitude').where('title =?',stop.title)[0][:latitude] %>,<%= @stops.select('longitude').where('title =?',stop.title)[0][:longitude] %>"><%= stop.title %></option>
+    <div class="form-group">
+    <select class="chosen" name="stop" id="station"   data-placeholder="choose the station">
+      <optio value=""></option>
+      <% @stops.each do |stop| %>
+        <option name="stop.latitude" value="<%=stop.title%>"><%= stop.title %></option>
 
       <% end %>
     </select>
-    <input type="submit" value="Show">
+  </div>
+    <input class="btn btn-primary btn-xs btn-size" type="submit" value="Show">
   </form>
 </div>
 </div>
 
-
+</div>
 </body>

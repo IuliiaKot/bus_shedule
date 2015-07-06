@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <script>
 $(document).ready(function(){
   $(".chosen").data("placeholder","Select location...").chosen();
@@ -6,46 +7,51 @@ $(document).ready(function(){
 </script>
 
 <body>
-
-
+<div class="row">
   <header class="sf-muni">
     SF-MUNI
   </header>
+</div>
 <p class="message"><%= @message %></p>
+<div >
 <div class="all">
   <!-- list of all stops -->
   <div>
-  <form action="/stops" method="post">
-    <select class="stop_title chosen" name="stop" id="station">
-      <% @stops.select("distinct title").order("title").each do |stop| %>
-        <option name="stop.latitude" value="<%=stop.title%>, <%= @stops.select('latitude').where('title =?',stop.title)[0][:latitude] %>,<%= @stops.select('longitude').where('title =?',stop.title)[0][:longitude] %>"><%= stop.title %></option>
-      <% end %>
-      <% if !@res.empty? %>
-      <option name="stop.latitude" value="<%= @res.first[:title] %>" selected="selected"><%= @res.first[:title] %></option>
-      <% end %>
-    </select>
-    <input type="submit" value="Show">
+  <form action="/stops" method="post" class="form-inline">
+    <div class="form-group">
+      <select class="stop_title chosen" name="stop" id="station"  data-placeholder="choose the station">
+        <optio value=""></option>
+        <% @stops.each do |stop| %>
+          <option name="stop.latitude" value="<%=stop.title %>"><%= stop.title %></option>
+        <% end %>
+        <% if !@res.empty? %>
+        <option name="stop.latitude" value="<%= @res.first[:title] %>" selected="selected"><%= @res.first[:title] %></option>
+        <% end %>
+      </select>
+    </div>
+    <input class="btn btn-primary btn-xs btn-size" type="submit" value="Show">
   </form>
 </div>
 </div>
 
-<div class="stops">
+<div class="stops row">
   <% @res.each do |stop| %>
-  <% next  if stop[:time].length == 0%>
+    <% (0..(stop[:time].length - 1)).step(2) do |t|%>
       <div class="name-direction">
-      <div> <span class="route"><%= stop[:route]%></span>, <%= stop[:time].last%> (<%= stop[:title]%>).
+      <div> <span class="route"><%= stop[:route]%></span>, <%= stop[:time][t+1][0]%> (<%= stop[:title]%>).
       <br>
       <span>The next bus through:</span></div>
       <ul class="time-list">
-      <% (stop[:time].length - 1).times do |elm| %>
-        <% if stop[:time].index(stop[:time][elm]) == 0 %>
-          <li class="time-first"><%= stop[:time][elm] %><span>min</span></li>
+      <% stop[:time][t].each do |elm| %>
+        <% if stop[:time][t].index(elm) == 0 %>
+          <li class="time-first"><%= elm %><span>min</span></li>
         <% else %>
-          <li class="time"><%= stop[:time][elm] %><span>min</span></li>
+          <li class="time"><%= elm %><span>min</span></li>
         <% end %>
       <% end %>
       </ul>
       </div>
+  <% end %>
   <% end %>
 
 </div>
@@ -103,5 +109,5 @@ function setMarkers(map, location) {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-
+</div>
 </body>

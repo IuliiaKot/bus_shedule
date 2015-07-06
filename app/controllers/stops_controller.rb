@@ -12,10 +12,10 @@ class StopsController < ApplicationController
          Stop.get_stops(route)
        end
      end
-     @agency = Agency.all
-     @routes = Route.all
+     #@agency = Agency.all
+     #@routes = Route.all
      #@stops = Stop.select("title, count(route_id), latitude, longitude").group("title")
-     @stops = Stop.all
+     @stops = Stop.select("distinct title").order("title")
      a = params
      #@lat_lng = cookies[:lat_lng].split("|")
     #  @lat_lng = ["37.7606","-122.5041"]
@@ -48,40 +48,62 @@ class StopsController < ApplicationController
     @message
     @location = []
     tmps = []
-    flag = false
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
     #@stops  = Stop.select("count(id), title, count(route_id), latitude, longitude").group("title")
-    @stops = Stop.all
+    @stops = Stop.select("distinct title").order("title")
     @lat_lng = [params[:latitude], params[:longitude].to_f]
     check_lat_lng(@lat_lng, address)
     if @lat_lng.empty? || @res.empty?
-      title = params["stop"].split(",")[0]
-      lat = params["stop"].split(",")[1].to_f
-      lng = params["stop"].split(",")[2].to_f
-      @stops_all = Stop.all
+      lat_lng = Stop.select('latitude, longitude').where('title =?',params["stop"])
+      title = params["stop"]
+      lat = lat_lng.first[:latitude]
+      lng = lat_lng.first[:longitude]
+    #  @stops_all = Stop.all
       @res = []
-      @nearloc = @stops_all.near([lat, lng], 0.1)
+      @nearloc = Stop.near([lat, lng], 0.1)
       @nearloc.each do |loc|
+        #byebug
         tag = Route.find_by_id(loc["route_id"])
         tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
         next if tmp.length == 0
         @res << {:route => tag["title"], :title => loc["title"], :time => tmp}
-        if @location.length > 0
+
+        # if tmp.length > 2
+        #   fdfvfd
+        #   tmp.select {|i| i.odd?}
+        #   jj
+        # else
+        #   tmp = tmp.last
+        # end
+        if @location.empty?
+          @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
+        else
           @location.each do |arr|
-            if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude]))
+            if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude])) && !arr[0].include?([[tag["title"],loc["title"], tmp.last]].join("|"))
               arr[0] += "|" + [[tag["title"],loc["title"], tmp.last]].join("|")
-              flag = true
+            else
+              @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]] if !@location.include?([[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]])
             end
           end
-          if flag
-            break
-          else
-            @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
-          end
-        else
-          @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
         end
-      end
+
+
+        # if @location.length > 0
+        #   @location.each do |arr|
+        #     if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude]))
+        #       arr[0] += "|" + [[tag["title"],loc["title"], tmp.last]].join("|")
+        #       flag = true
+        #     end
+        #   end
+        #   if flag
+        #     break
+        #   else
+        #     @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
+        #   end
+        # else
+        #   @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
+        # end
+       end
      end
    end
 end
