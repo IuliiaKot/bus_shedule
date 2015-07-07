@@ -14,7 +14,7 @@ class Stop < ActiveRecord::Base
 
         if inf == "prediction" and val.kind_of?(Array)
           val.each do |time|
-              result << time["minutes"]
+              result << time["minutes"].to_i
           end
         elsif inf == "prediction"
           result << val["minutes"]
@@ -28,11 +28,11 @@ class Stop < ActiveRecord::Base
     result = []
     if info == "prediction" and value.kind_of?(Array)
       value.each do |time|
-          result << time["minutes"]
+          result << time["minutes"].to_i
       end
     elsif info == "prediction"
 
-      result << value["minutes"]
+      result << value["minutes"].to_i
 
     else
       result << value

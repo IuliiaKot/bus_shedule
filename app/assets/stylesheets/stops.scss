@@ -2,9 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
-   background-color: #dadada;
-  //background-image: url('stops.jpg');
+  background-color: #dadada;
+  font-family: monospace;
 }
+
+// body {
+//   background: url('marker.jpg') no-repeat center center fixed;
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//
+// }
 .time-list {
   display: inline;
     padding-top: 5em;
@@ -16,12 +25,12 @@ body {
 }
 
 .time-list .time{
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .time-list .time-first{
-  font-size: 30px;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -31,9 +40,9 @@ body {
 }
 
 .name-direction div{
-  background-color: #00afd7; //#0087d7;
-  height: 85px;
-  font-size: 20px;
+  //background-color: #00afd7; //#0087d7;
+  //height: 85px;
+  font-size: 16px;
   border-radius: 5px;
   padding-top: 0.2em;
   padding-left: 0.3em;
@@ -45,12 +54,23 @@ body {
   font-weight: bold;
 }
 
+.route-direction {
+  padding-left: 2em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.next-bus {
+  padding-left: 2em;
+  font-size: 14px;
+}
+
 .name-direction  {
-  background-color: #00d7ff; //#00afff;
-  height: 100%;
+//  background-color: #00d7ff; //#00afff;
+  //height: 100%;
   //width: 45%;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 12px;
   border-radius: 20px;
 }
 select {
@@ -70,21 +90,22 @@ select:focus {
 
 
 .sf-muni {
-  border-radius: 20px;
-  font-size: 26px;
-  background-color: #0087af;//#00afff;
-  height: 60px;
-  width: 50%;
+  // border-radius: 20px;
+  font-size: 38px;
+  // background-color: #0087af;//#00afff;
+  // height: 60px;
+  // width: 50%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  padding-top: 1em;
+  padding-top: 0.5em;
+  font-family: monospace;
 }
 
 .stops {
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 65%;
 }
 .all {
   margin-left: auto;
@@ -114,7 +135,7 @@ select:focus {
   width: 50%;
 }
 
-.map {
+#map {
   margin-right: auto;
   margin-left: auto;
   width: 70%;
@@ -129,3 +150,15 @@ select:focus {
 .btn-size {
   margin-top: -8px;
 }
+
+
+
+
+// div {
+//  background-image: url('marker.jpg');
+//   background-color: red;
+//   width: 400px;
+//   height: 400px;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
