@@ -44,12 +44,35 @@ class StopsController < ApplicationController
   def new
   end
 
+
+  def find_index(location, lan_lng)
+    idx = -1
+    location.each_with_index do |arr,index|
+      if (arr.include?(lan_lng.first) || arr.include?(lan_lng.last))
+        idx =  index
+      end
+    end
+    idx
+  end
+
+  def group_location_for_marks(location, params)
+    if location.empty?
+       location << params
+     else
+          idx = find_index(location, params[-2..-1])
+       if  idx != -1
+           location[idx][0] += "|" + params.first
+       else
+           location << params
+       end
+     end
+     location
+  end
+
   def create
     @message
     @location = []
-    tmps = []
     address = Geocoder.address([params[:latitude], params[:longitude].to_f])
-    #@stops  = Stop.select("count(id), title, count(route_id), latitude, longitude").group("title")
     @stops = Stop.select("distinct title").order("title")
     @lat_lng = [params[:latitude], params[:longitude].to_f]
     check_lat_lng(@lat_lng, address)
@@ -67,6 +90,7 @@ class StopsController < ApplicationController
         tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
         next if tmp.length == 0
         @res << {:route => tag["title"], :title => loc["title"], :time => tmp}
+        @location = group_location_for_marks(@location, [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]])
 
         # if tmp.length > 2
         #   fdfvfd
@@ -75,74 +99,7 @@ class StopsController < ApplicationController
         # else
         #   tmp = tmp.last
         # end
-        if @location.empty?
-          @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
-        else
-          @location.each do |arr|
-            if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude])) && !arr[0].include?([[tag["title"],loc["title"], tmp.last]].join("|"))
-              arr[0] += "|" + [[tag["title"],loc["title"], tmp.last]].join("|")
-            else
-              @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]] if !@location.include?([[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]])
-            end
-          end
-        end
-
-
-        # if @location.length > 0
-        #   @location.each do |arr|
-        #     if (arr.include?(loc[:latitude]) || arr.include?(loc[:longitude]))
-        #       arr[0] += "|" + [[tag["title"],loc["title"], tmp.last]].join("|")
-        #       flag = true
-        #     end
-        #   end
-        #   if flag
-        #     break
-        #   else
-        #     @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
-        #   end
-        # else
-        #   @location << [[tag["title"],loc["title"], tmp.last].join("|"), loc[:latitude], loc[:longitude]]
-        # end
        end
      end
    end
 end
-#
-# def create
-#   title = params["stop"].split(",")[0]
-#   lat = params["stop"].split(",")[1].to_f
-#   lng = params["stop"].split(",")[2].to_f
-#   @stops = Stop.all
-#   #stop = Stop.find_by_tag(params)
-#   @res ={}
-#   @nearloc = Stop.near([lat, lng], 0.1)
-#   @nearloc.each do |loc|
-#     tag = Route.find_by_id(loc["route_id"])
-#     a  = Stop.get_time_for_stop([tag,loc["tag"].to_i])
-# f
-#     @res[loc["title"]] = a
-#   end
-#  end
-
-
-
-####better solution
-# def create
-#   title = params["stop"].split(",")[0]
-#   lat = params["stop"].split(",")[1].to_f
-#   lng = params["stop"].split(",")[2].to_f
-#   @stops = Stop.all
-#   #stop = Stop.find_by_tag(params)
-#   @res ={}
-#   @nearloc = Stop.near([lat, lng], 0.1)
-#   stops = []
-#   @nearloc.each do |loc|
-#     tag = Route.find_by_id(loc["route_id"])
-#     params = [tag,loc["tag"].to_i]
-#     stops << [params[0]["tag"], params[1]].join("|")
-#     #a  = Stop.get_time_for_stop([tag,loc["tag"].to_i])
-#   #  @res[loc["title"]] = a
-#   end
-#   Stop.get_time_for_stop(stops.join("&stops="))
-#   gjfkgj
-#  end
