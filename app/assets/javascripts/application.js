@@ -17,4 +17,3 @@
 //= require gmaps/google
 //= require_tree .
 //= require chosen.jquery.min
-//= require bootstrap
