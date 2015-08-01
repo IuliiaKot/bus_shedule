@@ -8,11 +8,11 @@ The data are collected directly from the NextBus API in XML, variously using HTT
 ###Front-end
 
    1. Used a basic CSS framework Bootstrap
-   2.  Added a jQuery plugin (Chosen) to make station selection easier
-   3.  Using browser's geolocation api to determine user's location.
+   2. Added a jQuery plugin (Chosen) to make station selection easier
+   3. Using browser's geolocation api to determine user's location.
     
 ###Back-end
 
-    * Ruby on Rails
-    * Sqlite3(development)
-    * PostgreSQL(production)
+   1. Ruby on Rails
+   2. Sqlite3(development)
+   3. PostgreSQL(production)
