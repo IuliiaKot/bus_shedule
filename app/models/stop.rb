@@ -46,7 +46,8 @@ class Stop < ActiveRecord::Base
     response = HTTParty.get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=#{route[0].agency.tag}&r=#{route[0].tag}&s=#{route[1]}")
     #disable_rails_query_string_format
     if response.parsed_response["body"]["Error"]
-      error.push(response.parsed_response["body"]["Error"]['__content__'])
+      #error.push(response.parsed_response["body"]["Error"]['__content__'])
+      return []
     elsif response.parsed_response["body"]["predictions"]["direction"]
        response.parsed_response["body"]["predictions"]["direction"].each do |info, value|
          if value.nil?
@@ -59,7 +60,7 @@ class Stop < ActiveRecord::Base
     else
       return []
     end
-    return [result,error] #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
+    return result #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
   end
 
 

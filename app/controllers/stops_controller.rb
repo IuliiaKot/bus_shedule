@@ -90,11 +90,11 @@ class StopsController < ApplicationController
         tag = Route.find_by_id(loc["route_id"])
         tmp = Stop.get_time_for_stop([tag,loc["tag"].to_i])
         next if tmp.length == 0
-        @res << {:route => tag["title"], :title => loc["title"], :time => tmp[0]}
+        @res << {:route => tag["title"], :title => loc["title"], :time => tmp}
         if @res_s.has_key?(loc["title"])
-          @res_s[loc["title"]] << [tag["title"],tmp[0]].flatten
+          @res_s[loc["title"]] << [tag["title"],tmp].flatten
         else
-          @res_s[loc["title"]] = [[tag["title"],tmp[0]].flatten]
+          @res_s[loc["title"]] = [[tag["title"],tmp].flatten]
         end
         @location = group_location_for_marks(@location, [[tag["title"],loc["title"], tmp[-2]].join("|"), format("%.4f",loc[:latitude]).to_f, format("%.4f",loc[:longitude]).to_f])
        end
