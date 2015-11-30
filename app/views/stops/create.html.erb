@@ -7,9 +7,9 @@ $(document).ready(function(){
 </script>
 <body>
 
-
+<div class="container">
 <p class="message"><%= @message %></p>
-<div >
+
 <div class="all">
   <!-- list of all stops -->
   <div>
@@ -34,7 +34,7 @@ $(document).ready(function(){
 
   <% if @res.empty? %>
 
-    <div>not avaliable right now</div>
+    <div class='text-center'><h4>not avaliable right now</h4></div>
     <script type="text/javascript">
       $(document).ready(function(){
         $('#map').hide();
@@ -43,22 +43,21 @@ $(document).ready(function(){
   <% else %>
   <% @res.each do |stop| %>
     <% (0..(stop[:time].length - 1)).step(2) do |t|%>
-      <div class="name-direction">
-      <div> <span class="route"><%= stop[:route]%></span>, <%= stop[:time][t+1][0]%> (<%= stop[:title]%>).
-      <br>
-      <span>The next buses are in:</span></div>
-      <ul class="time-list">
-      <% stop[:time][t].each do |elm| %>
-        <% if elm == 0%>
-          <li class="time-first"><span>NOW</span></li>
-        <% elsif stop[:time][t].index(elm) == 0 %>
-          <li class="time-first"><%= elm %><span>min</span></li>
-        <% else %>
-          <li class="time"><%= elm %><span>min</span></li>
-        <% end %>
-      <% end %>
-      </ul>
-      <hr>
+      <div class="name-direction col-md-12">
+        <div class='header-stop'> <span class="route"><%= stop[:route]%></span>, <%= stop[:time][t+1][0]%> (<%= stop[:title]%>).
+          <br>
+          <span>The next buses are in:</span></div>
+          <ul class="time-list">
+          <% stop[:time][t].each do |elm| %>
+            <% if elm == 0%>
+              <li class="time-first"><span>NOW</span></li>
+            <% elsif stop[:time][t].index(elm) == 0 %>
+              <li class="time-first"><%= elm %><span>min</span></li>
+            <% else %>
+              <li class="time"><%= elm %><span>min</span></li>
+            <% end %>
+          <% end %>
+          </ul>
       </div>
   <% end %>
   <% end %>
@@ -67,7 +66,7 @@ $(document).ready(function(){
 
 
 <div id="map">
-  <div id="map-canvas" style='width: 1000px; height: 600px;'></div>
+  <div id="map-canvas"></div>
 </div>
 </body>
 <script type="text/javascript">
@@ -98,11 +97,11 @@ function setMarkers(map, location) {
       title: "Hello"
     });
     discribe_stop = location[i-1].split("|");
-    var content = "<div class='street'>" + discribe_stop[1].replace(/"/g, "") + "</div>"+
-    "<hr>"
-    for (var j = 0; j < discribe_stop.length; j = j + 3)
+    var content = "<div class='street'>" + discribe_stop[1].replace(/"/g, "") + "</div>";
+    for (var j = 0; j < discribe_stop.length; j++)
     {
-      content += "<div>"+discribe_stop[j].replace(/"/g,"") +" ("+discribe_stop[j + 2].replace(/"/g,"")+")"+"</div>";
+      if (isNaN(discribe_stop[j].replace(/"/g,"")) && isNaN(discribe_stop[j + 1].replace(/"/g,"")))
+       { content += "<div class='number_route'>"+discribe_stop[j].replace(/"/g,"") + "</div>";}
     }
 
     var infowindow = new google.maps.InfoWindow()

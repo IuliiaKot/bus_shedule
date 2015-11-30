@@ -96,7 +96,8 @@ class StopsController < ApplicationController
         else
           @res_s[loc["title"]] = [[tag["title"],tmp].flatten]
         end
-        @location = group_location_for_marks(@location, [[tag["title"],loc["title"], tmp[-2]].join("|"), format("%.4f",loc[:latitude]).to_f, format("%.4f",loc[:longitude]).to_f])
+
+        @location = group_location_for_marks(@location, [[tag["title"].concat('('+tmp[-1].last+')'),loc["title"], tmp[-2]].join("|"), format("%.4f",loc[:latitude]).to_f, format("%.4f",loc[:longitude]).to_f])
        end
      end
    end
