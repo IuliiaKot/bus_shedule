@@ -12,14 +12,8 @@ class StopsController < ApplicationController
          Stop.get_stops(route)
        end
      end
-     #@agency = Agency.all
-     #@routes = Route.all
-     #@stops = Stop.select("title, count(route_id), latitude, longitude").group("title")
      @stops = Stop.select("distinct title").order("title")
      a = params
-     #@lat_lng = cookies[:lat_lng].split("|")
-    #  @lat_lng = ["37.7606","-122.5041"]
-    # check_lat_lng(@lat_lng)
   end
 
   def check_lat_lng(lat_lng, address)

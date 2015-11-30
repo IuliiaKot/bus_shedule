@@ -46,7 +46,6 @@ class Stop < ActiveRecord::Base
     response = HTTParty.get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=#{route[0].agency.tag}&r=#{route[0].tag}&s=#{route[1]}")
     #disable_rails_query_string_format
     if response.parsed_response["body"]["Error"]
-      #error.push(response.parsed_response["body"]["Error"]['__content__'])
       return []
     elsif response.parsed_response["body"]["predictions"]["direction"]
        response.parsed_response["body"]["predictions"]["direction"].each do |info, value|
@@ -60,7 +59,7 @@ class Stop < ActiveRecord::Base
     else
       return []
     end
-    return result #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
+    return result
   end
 
 
@@ -74,27 +73,3 @@ class Stop < ActiveRecord::Base
 
   end
 end
-
-
-# def self.get_time_for_stop(route)
-#   result = []
-#   response = HTTParty.get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=#{route[0].agency.tag}&r=#{route[0].tag}&s=#{route[1]}")
-# #  dsdsf
-#   #disable_rails_query_string_format
-#   if response.parsed_response["body"]["predictions"]["direction"]
-#      response.parsed_response["body"]["predictions"]["direction"].each do |info, value|
-#       if info == "prediction" and value.kind_of?(Array)
-#         value.each do |time|
-#             result << time["minutes"]
-#         end
-#       elsif info == "prediction"
-#         result << value["minutes"]
-#       else
-#         result << value
-#       end
-#      end
-#   else
-#     return []
-#   end
-#   return result #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
-# end
