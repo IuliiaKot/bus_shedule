@@ -43,21 +43,31 @@ $(document).ready(function(){
   <% else %>
   <% @res.each do |stop| %>
     <% (0..(stop[:time].length - 1)).step(2) do |t|%>
-      <div class="name-direction col-md-12">
-        <div class='header-stop'> <span class="route"><%= stop[:route]%></span>, <%= stop[:time][t+1][0]%> (<%= stop[:title]%>).
-          <br>
-          <span>The next buses are in:</span></div>
-          <ul class="time-list">
-          <% stop[:time][t].each do |elm| %>
-            <% if elm == 0%>
-              <li class="time-first"><span>NOW</span></li>
-            <% elsif stop[:time][t].index(elm) == 0 %>
-              <li class="time-first"><%= elm %><span>min</span></li>
-            <% else %>
-              <li class="time"><%= elm %><span>min</span></li>
-            <% end %>
-          <% end %>
-          </ul>
+      <div class="name-direction col-md-12 col-xs-12">
+        <aside class="left-info-stop">
+          <div class='header-stop text-center'> <span class="route"><%= stop[:route]%></span>
+              <p>
+                <%= stop[:title]%>
+              </p>
+          </div>
+        </aside>
+        <br>
+          <aside class="right-info-stop">
+            <div class="">
+              <p>The next buses are in:</p>
+              <ul class="time-list">
+              <% stop[:time][t].each do |elm| %>
+                <% if elm == 0%>
+                  <li class="time-first"><span>NOW</span></li>
+                <% elsif stop[:time][t].index(elm) == 0 %>
+                  <li class="time-first"><%= elm %><span>min</span></li>
+                <% else %>
+                  <li class="time"><%= elm %><span>min</span></li>
+                <% end %>
+              <% end %>
+              </ul>
+            </div>
+          </aside>
       </div>
   <% end %>
   <% end %>

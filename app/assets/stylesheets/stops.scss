@@ -81,12 +81,30 @@ body {
 .stops {
   margin-left: auto;
   margin-right: auto;
-  width: 55%;
+  width: 70%;
   .col-md-12 {
+    .left-info-stop {
+      width: 40%;
+      float: left;
+      .header-stop {
+        background: rgba(20, 152, 184, 1);
+        border-radius: 5px 0 0 5px;
+      //  height: 80px;
+          padding: 10px;
+      }
+    }
+    .right-info-stop {
+      width: 60%;
+      float: right;
+      margin-top: -14px;
+      div {
+        background: rgba(20, 152, 184, 0.1);
+        border-radius: 0 5px 5px 0;
+      //  height: 80px;
+          padding: 10px 10px 20px 10px;
 
-    .header-stop {
-      background: rgba(20, 152, 184, 1);
-      border-radius: 5px;
+      }
+
     }
   }
 }
@@ -94,7 +112,7 @@ body {
 #map-canvas {
   margin-left: auto;
   margin-right: auto;
-  width: 65%;
+  width: 95%;
   height: 600px;
 }
 
@@ -192,4 +210,46 @@ body {
 
 .container {
   margin-top: 30px;
+}
+
+
+
+@media screen and (max-width: 375px) {
+
+  .time-list {
+    display: inline;
+      padding-top: 5em;
+      li {
+        padding-right: 1.5em;
+        display: inline;
+      }
+      .time{
+        font-size: 38px;
+        font-weight: bold;
+      }
+      .time-first{
+        font-size: 40px;
+        font-weight: bold;
+      }
+      span {
+        font-size: 38px;
+        padding-left: 0.5em;
+      }
+    }
+
+
+
+  .stops {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    font-size: 144px;
+    .col-xs-12 {
+      .header-stop {
+        // background: rgba(20, 152, 184, 1);
+        // border-radius: 5px;
+            font-size: 34px;
+      }
+    }
+  }
 }
