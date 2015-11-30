@@ -53,7 +53,9 @@ $(document).ready(function(){
       <span>The next buses are in:</span></div>
       <ul class="time-list">
       <% stop[:time][t].each do |elm| %>
-        <% if stop[:time][t].index(elm) == 0 %>
+        <% if elm == 0%>
+          <li class="time-first"><span>NOW</span></li>
+        <% elsif stop[:time][t].index(elm) == 0 %>
           <li class="time-first"><%= elm %><span>min</span></li>
         <% else %>
           <li class="time"><%= elm %><span>min</span></li>

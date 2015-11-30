@@ -42,10 +42,12 @@ class Stop < ActiveRecord::Base
 
 
   def self.get_time_for_stop(route)
-    result = []
+    result, error = [], []
     response = HTTParty.get("http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=#{route[0].agency.tag}&r=#{route[0].tag}&s=#{route[1]}")
     #disable_rails_query_string_format
-    if response.parsed_response["body"]["predictions"]["direction"]
+    if response.parsed_response["body"]["Error"]
+      error.push(response.parsed_response["body"]["Error"]['__content__'])
+    elsif response.parsed_response["body"]["predictions"]["direction"]
        response.parsed_response["body"]["predictions"]["direction"].each do |info, value|
          if value.nil?
           tmp =  select_multiple_times(info)
@@ -57,7 +59,7 @@ class Stop < ActiveRecord::Base
     else
       return []
     end
-    return result #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
+    return [result,error] #<< response.parsed_response["body"]["predictions"]["direction"]["title"]
   end
 
 
