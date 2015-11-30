@@ -28,12 +28,6 @@
 
   });
 </script>
-  <header class="sf-muni">
-    SF-MUNI
-  </header>
-<div>
-
-
 
 <script>
 $(document).ready(function(){
@@ -52,6 +46,7 @@ $(document).ready(function(){
     <%= hidden_field_tag(:longitude, params[:longitude])%>
     <div class="form-group">
     <select class="chosen" name="stop" id="station"   data-placeholder="choose the station">
+      <!-- disabled='true' -->
       <optio value=""></option>
       <% @stops.each do |stop| %>
         <option name="stop.latitude" value="<%=stop.title%>"><%= stop.title %></option>

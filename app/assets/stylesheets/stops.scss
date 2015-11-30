@@ -151,14 +151,28 @@ select:focus {
   margin-top: -8px;
 }
 
+.site-footer{
+  position: fixed;
+  bottom: 0;
+  height: 54px;
+  width: 100%;
+  .left {
+    width: 40%;
+    float: left;
+    padding-left: 20px;
+  }
+  .right {
+    width: 60%;
+    float: right;
+    text-align: right;
+    padding-right: 20px;
+    ul {
+      text-decoration: none
 
-
-
-// div {
-//  background-image: url('marker.jpg');
-//   background-color: red;
-//   width: 400px;
-//   height: 400px;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
+    }
+    li {
+      text-decoration: none;
+      display: inline;
+    }
+  }
+}
